@@ -87,6 +87,7 @@ class WireFish(QWidget):
 
     def start_sniff(self):
         if self.sniffer:
+            self.reset_capture()
             return
         
         ifacetouse = self.iface_combo.currentText()
@@ -106,8 +107,26 @@ class WireFish(QWidget):
         self.sniffer = Sniffer("udp or tcp", ifacetouse)
         self.sniffer.start_sniff()
         self.status.setText("started sniffing (default filter tcp or udp)")
-        self.start_btn.setEnabled(False)
+        self.start_btn.setText("reset")
         self.timer.start()
+
+    def reset_capture(self):
+        #stop sniffer n close writer
+        try:
+            if self.sniffer:
+                self.sniffer.stop()
+        except Exception as e:
+            print(f"stop error: {e}")
+
+        self.sniffer = None
+        self.timer.stop()
+
+        cap_list().clear() #clear buffer and ui
+        self.last_r = 0
+        self.table.setRowCount(0)
+        self.status.setText("reset, press to begin sniffing 8)")
+        self.start_btn.setText("sniff")
+        self.pcap_btn.setText("save to PCAP [OFF]")
 
     def toggle_pcap(self):
         if not self.sniffer:

@@ -18,6 +18,6 @@ if %errorlevel% neq 0 (
 
 echo.
 echo Launching Wirefish...
-python main.py
+python ./src/main.py
 
 pause

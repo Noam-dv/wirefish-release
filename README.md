@@ -1,4 +1,5 @@
 # Wirefish
+![](img/icon.png)
 
 Wireshark ripoff made with **PySide6 + Scapy**.  
 captures packets shows them in a readable fashion, lets you pick an interface, filter the view, and save to **PCAP** (incase u wanna view it in wireshark beacuse its better)
